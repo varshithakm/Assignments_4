@@ -1,0 +1,25 @@
+Verify that the pods are running and healthy:
+kubectl get pods
+
+Check the logs of the pods to see if there are any error messages or other indications of what might be causing the issue:
+kubectl logs <pod-name>
+
+Verify that the replica set is correctly configured and that the desired number of replicas are running:
+kubectl get replicasets
+
+Check the service definition to verify that it is configured to use the correct port and that it is associated with the correct replica set:
+kubectl get services
+
+Verify that the nodeport is open and accessible from outside the cluster:
+kubectl get nodes -o wide
+
+Check the network policy to ensure that traffic is allowed to the pod at the specified port:
+kubectl get networkpolicies
+
+Check the pod's firewall rules to ensure that incoming traffic to the specified port is allowed:
+kubectl describe pod <pod-name>
+
+If the issue persists, try debugging the application by accessing it from inside the cluster using a shell in a running pod:
+kubectl exec -it <pod-name> /bin/bash
+
+If none of the above steps resolve the issue, consider seeking additional information from the application logs, cluster logs, and network traffic logs
