@@ -1,0 +1,22 @@
+Q-01
+
+ A common usecase for using a daemon set instead of a replicaset is when you want to ensure that a specific pod is running on every node in a cluster.
+
+ Replication controller not in control of allocating all pods to all nodes which will randomly taken and distributes
+ but it can also distribute all of them to the same node which is not a welcoming condition for config manages they 
+ need their application to run in each and every machines which is the reason we have daemonset.
+ BENEFITS OF DAEMON SET :-
+  BENEFITS OF DAEMON SET :-
+ It will allocates exactly one pod where node.
+ 
+[root@ip-172-31-14-22 04-controllers ]# vi ssd-monitor-daemonset.yaml
+[root@ip-172-31-14-22 04-controllers]# kubectl get nodes
+NAME                                              STATUS   ROLES    AGE   VERSION
+ip-172-31-14-22.ap-southeast-1.compute.internal   Ready    master   5d    v1.18.5
+ip-172-31-3-73.ap-southeast-1.compute.internal    Ready    <none>   8d    v1.18.5
+[root@ip-172-31-14-22 04-controllers]# vi ssd-monitor-daemonset.yaml
+[root@ip-172-31-14-22 04-controllers]# kubectl apply -f ssd-monitor-daemonset.yaml
+daemonset.apps/ssd-monitor created
+[root@ip-172-31-14-22 04-controllers]# kubectl get ds
+NAME           DESIRED      CURRENT     READY     UP-TO-DATE    AVAILABLE   NODE SELECTOR   AGE
+ssd-monitor      0            0         0         0              0          disk=ssd         41s  
