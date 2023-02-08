@@ -1,0 +1,96 @@
+yum install git -y
+ 
+/root/example-voting-app
+/root/example-voting-app/k8s-specifications
+
+/root/example-voting-app/vote
+vi app.py
+Voting Pod app
+
+from flask import Flask, render_template, request, make_response
+from redis import Redis
+import os
+import socket
+import random
+import json
+
+option_a = os.getenv('OPTION_A', "Cats")
+
+  
+root/example-voting-app/worker/src/Worker
+vi Program.cs
+worker pod app 
+
+using System;
+using System.Data.Common;
+using System.Linq;
+using System.Net;
+using System.Net.Sockets;
+using System.Threading;
+using Newtonsoft.Json;
+using Npgsql;
+using StackExchange.Redis;
+
+namespace Worker
+{
+    public class Program
+
+/root/example-voting-app/result
+vi server.js
+ result app
+
+ var express = require('express'),
+    async = require('asynch'),
+    pg = require("pg"),
+    path = require("path"),
+    cookieParser = require('cookie-parser'),
+    bodyParser = require('body-parser'),
+    methodOverride = require('method-override'),
+
+
+ kubectl apply -f
+
+ deployment.apps/db created
+service/db created
+deployment.apps/redis created
+service/redis created
+deployment.apps/result created
+service/result created
+deployment.apps/vote created
+service/vote created
+deployment.apps/worker created
+
+ 
+Kubectl get po
+
+NAME                      READY   STATUS    RESTARTS   AGE
+db-b54cd94f4-4hrnk        1/1     Running   0          2m43s
+redis-868d64d78-dj9mn     1/1     Running   0          2m43s
+result-5d57b59f4b-bp7f7   1/1     Running   0          2m43s
+vote-84849dc97-9cpvv      1/1     Running   0          2m43s
+worker-dd46d7584-h9b5b    1/1     Running   0          2m43s
+
+
+Deleting the vote pod
+kubectl delete po vote-84849dc97-9cpvv
+pod "vote-84849dc97-9cpvv" deleted
+*When we delete the vote pod there are no changes in the front end as well as in the unix.
+
+Deleting the worker pod 
+kubectl delete po worker-dd46d7584-h9b5b
+pod "worker-dd46d7584-h9b5b" deleted
+* When we delete the worker pod there are no changes in the front end as well as in the unix.
+
+Deleting the db pod 
+kubectl delete po db-b54cd94f4-4hrnk
+pod "db-b54cd94f4-4hrnk" deleted
+
+When we delete the db pod there are no changes in the front end as well as in the unix but ideally there should be some difference but instead the result 
+pod and worker pod restarts .
+
+NAME                      READY   STATUS    RESTARTS   AGE
+db-b54cd94f4-fhfdk        1/1     Running   0          2m2s
+redis-868d64d78-dj9mn     1/1     Running   0          10m
+result-5d57b59f4b-bp7f7   1/1     Running   1          10m
+vote-84849dc97-rncjp      1/1     Running   0          5m28s
+worker-dd46d7584-x89l4    1/1     Running   1          3m7s
