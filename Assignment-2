@@ -1,0 +1,36 @@
+Create a new image with the desired changes and push it to a container registry.
+Update the deployment specification with the new image in a YAMLfile:
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: my-container
+        image: my-registry/my-new-image:1.0
+        ports:
+        - containerPort: 80Connect
+Connect to the cluster using kubectl
+kubectl config use-context my-cluster-context
+
+Apply the updated deployment specification to the cluster:
+kubectl apply -f deployment.yaml
+
+use the deploment controller's rolling update feature.
+This will ensure that new replicas with updated image are gradually created while old replicas with the old image are gradually terminated:
+kubectl rollout status deployment my-deployment
+
+Monitor the rollout process to ensure that new replicas are functioning as expected and that no problem are encountered:
+kubectl rollout status deployment my-deployment
+
+Once the new replicas are up and running the old replicas can be fully terminated
+kubectl rollout undo deployment my-deployment 
